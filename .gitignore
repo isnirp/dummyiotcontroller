@@ -1,0 +1,13 @@
+*.DS_Store
+*.iml
+/.idea
+target/
+build/
+/secrets
+bin
+*.project
+.vscode
+**/.classpath
+**/.project
+**/.settings
+**/.factorypath
