@@ -5,6 +5,7 @@ public class MqttComm {
 
     public MqttComm(String mqttHost, int mqttPort){
         endpoint = mqttHost+":"+mqttPort;
+        publisher = new MqttClient(endpoint, clientId);
     }
 
     public void connect(){
@@ -17,5 +18,9 @@ public class MqttComm {
         
     }
 
-    public void sendMessage(){}
+    public void sendMessage(String topic, MqttMessage mqttMsg){
+        msg.setQos(0);
+        msg.setRetained(true);
+        publisher.publish(topic, mqttMsg);
+    }
 }
