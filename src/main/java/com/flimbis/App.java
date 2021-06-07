@@ -9,7 +9,7 @@ public class App {
   public App() {}
 
   public static void main(String[] args) {
-    MqttCommunication mqttClient = new MqttCommunication("localhost",1884);
+    MqttCommunication mqttClient = new MqttCommunication("10.216.38.134",1884);
     mqttClient.connect();
 
     System.out.println( "Hello World!" );
