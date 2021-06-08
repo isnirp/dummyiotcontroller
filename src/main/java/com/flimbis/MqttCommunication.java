@@ -15,7 +15,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class MqttCommunication implements MqttCallback {
     private MqttClient client;
-    private LinkedBlockingQueue<String> msgQueue;
+    private LinkedBlockingQueue<Traffic> msgQueue;
 
     public MqttCommunication(String mqttHost, int mqttPort){
         String endpoint = String.format("tcp://%s:%d", mqttHost, mqttPort);
@@ -64,8 +64,8 @@ public class MqttCommunication implements MqttCallback {
         }
     }
     
-    public Observable<String> getTraffic(){
-        Observable<String> trafficObservable = null;
+    public Observable<Traffic> getTraffic(){
+        Observable<Traffic> trafficObservable = null;
         try {
             trafficObservable = Observable.just(msgQueue.take());      
         } catch (Exception e) {
@@ -92,15 +92,31 @@ public class MqttCommunication implements MqttCallback {
     @Override
     public void messageArrived(String topic, MqttMessage message) throws MqttException {
         System.out.println(String.format("[%s] %s", topic, new String(message.getPayload())));
-        msgQueue.add(new String(message.getPayload()));
+        msgQueue.add(new Traffic(topic, new String(message.getPayload())));
     }
 
-    protected class Traffic{
+    class Traffic{
         String topic;
         String msg;
         public Traffic(String topic, String msg){
             this.topic = topic;
             this.msg = msg;
+        }
+
+        public void setTopic(String topic){
+            this.topic = topic;
+        }
+
+        public String getTopic(){
+            return this.topic;
+        }
+        
+        public void setMessage(String msg){
+            this.msg = msg;
+        }
+        
+        public String getMessage(){
+            return this.msg;
         }
     }
 

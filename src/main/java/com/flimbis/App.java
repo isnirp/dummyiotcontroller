@@ -1,6 +1,7 @@
 package com.flimbis;
 
 import io.reactivex.rxjava3.core.*;
+import com.flimbis.MqttCommunication.Traffic;
 
 /** Hello world! */
 public class App {
@@ -18,8 +19,8 @@ public class App {
     // consume temperature data
     //      publish to iot core
     while(true){
-      Observable<String> observable = mqttClient.getTraffic();
-      observable.subscribe(msg -> System.out.println("message: "+msg));
+      Observable<Traffic> observable = mqttClient.getTraffic();
+      observable.subscribe(traffic -> System.out.println("topic: "+traffic.getTopic()+", message: "+traffic.getMessage()));
     }
   }
 }
