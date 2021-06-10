@@ -44,6 +44,11 @@ public class MqttCommunication implements MqttCallback {
         
     }
 
+    public void disconnect() throws MqttException {
+        this.client.disconnect();
+        System.out.println("disconnected");
+    }
+
     public void sendMessage(String topic, String msg){
         MqttMessage mqtt_message = new MqttMessage();
         mqtt_message.setQos(0);
